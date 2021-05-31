@@ -1,0 +1,23 @@
+<h2 mat-dialog-title>Edit Todo Item</h2>
+
+<mat-divider></mat-divider>
+
+<mat-dialog-content class="container minWidth"  >
+    <form [formGroup]="todoEditForm">
+        <mat-form-field  class="minWidth" >
+            <mat-label>Your Todo</mat-label>
+            <input matInput formControlName="title"  />
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+    
+<mat-divider></mat-divider>
+
+<mat-dialog-actions>
+    <button mat-raised-button mat-dialog-close color="primary">Close</button>
+    <button mat-raised-button color="accent" 
+    [disabled]="!todoEditForm.get('title').valid || (todoEditForm.get('title').value == initialData.title)"
+    (click)="editItem()"
+    >Edit</button>
+</mat-dialog-actions>
+

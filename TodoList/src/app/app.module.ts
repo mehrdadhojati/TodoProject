@@ -10,13 +10,17 @@ import { TodosComponent } from './components/todos/todos.component';
 import { DataTableComponent } from './components/data-table/data-table.component';
 import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
+import { EditTodoComponent } from './components/todos/edit-todo/edit-todo.component';
+import { DeleteTodoComponent } from './components/todos/delete-todo/delete-todo.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     TodosComponent,
-    DataTableComponent
+    DataTableComponent,
+    EditTodoComponent,
+    DeleteTodoComponent,
   ],
   imports: [
     BrowserModule,
