@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { Todo } from 'src/app/models/todo.model';
+import { TodoApiHelperService } from 'src/app/services/todo.apihelper.service';
+import { TodoService } from 'src/app/services/todo.service';
 
 @Component({
   selector: 'app-todos',
@@ -13,7 +16,7 @@ export class TodosComponent implements OnInit {
 
   todoAddForm: FormGroup;
 
-  constructor() { }
+  constructor(private todoService: TodoService) { }
 
   ngOnInit(): void {
     this.todoAddForm = new FormGroup({
@@ -22,8 +25,7 @@ export class TodosComponent implements OnInit {
   }
 
   onSubmit() {
-    alert(this.todoAddForm.get('title').value)
-    //alert(this.todoAddForm.get('title').value);
+    this.todoService.AddTodo(this.todoAddForm.get('title').value);
   }
 
 

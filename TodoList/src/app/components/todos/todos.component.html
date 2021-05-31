@@ -2,7 +2,7 @@
     <span class="TodoBaseColor">Welcome to Todo List</span>
 </mat-toolbar>
 
-<div class="container-fluid">
+<div class="container">
     <form (ngSubmit)="onSubmit()" [formGroup]="todoAddForm">
         <mat-form-field>
             <mat-label>Your Todo</mat-label>
@@ -14,3 +14,5 @@
         style="margin-left: 10px;">Add Tdod</button>
     </form>
 </div>
+
+<app-data-table></app-data-table>
