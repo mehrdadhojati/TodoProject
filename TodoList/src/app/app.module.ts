@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -12,6 +12,13 @@ import { HttpClientModule } from '@angular/common/http';
 import { ToastrModule } from 'ngx-toastr';
 import { EditTodoComponent } from './components/todos/edit-todo/edit-todo.component';
 import { DeleteTodoComponent } from './components/todos/delete-todo/delete-todo.component';
+import { AppConfig } from './services/app-initializer/app.initializer.service';
+
+const appConfig = (config: AppConfig) => {
+  return () => {
+    return config.initialize();
+  }
+}
 
 
 @NgModule({
@@ -36,7 +43,15 @@ import { DeleteTodoComponent } from './components/todos/delete-todo/delete-todo.
       preventDuplicates: true,
     })
   ],
-  providers: [],
+  providers: [
+    AppConfig,
+    {
+      provide: APP_INITIALIZER,
+      useFactory: appConfig,
+      multi: true,
+      deps: [AppConfig]
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

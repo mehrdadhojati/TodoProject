@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA } from '@angular/material/dialog';
-import { Todo } from 'src/app/models/todo.model';
+import { ITodo } from 'src/app/models/todo.model';
 
 @Component({
   selector: 'app-delete-todo',
@@ -9,9 +9,9 @@ import { Todo } from 'src/app/models/todo.model';
 })
 export class DeleteTodoComponent implements OnInit {
 
-  initialData: Todo;
-  
-  constructor(@Inject(MAT_DIALOG_DATA) private data: Todo) { 
+  initialData: ITodo;
+
+  constructor(@Inject(MAT_DIALOG_DATA) private data: ITodo) { 
     this.initialData = data;
   }
 

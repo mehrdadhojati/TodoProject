@@ -3,25 +3,20 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { TodoApiHelperService } from 'src/app/services/todo.apihelper.service';
-import { Todo } from 'src/app/models/todo.model';
+import { ITodo } from 'src/app/models/todo.model';
 
-// TODO: Replace this with your own data model type
-export interface DataTableItem {
-  name: string;
-  id: number;
-}
+
 
 // TODO: replace this with real data from your application
-const EXAMPLE_DATA: Todo[] = [];
+const EXAMPLE_DATA: ITodo[] = [];
 
 /**
  * Data source for the DataTable view. This class should
  * encapsulate all logic for fetching and manipulating the displayed data
  * (including sorting, pagination, and filtering).
  */
-export class DataTableDataSource extends DataSource<Todo> {
-  data: Todo[] = EXAMPLE_DATA;
+export class DataTableDataSource extends DataSource<ITodo> {
+  data: ITodo[] = EXAMPLE_DATA;
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
@@ -34,7 +29,7 @@ export class DataTableDataSource extends DataSource<Todo> {
    * the returned stream emits new items.
    * @returns A stream of the items to be rendered.
    */
-  connect(): Observable<Todo[]> {
+  connect(): Observable<ITodo[]> {
     if (this.paginator && this.sort) {
       // Combine everything that affects the rendered data into one update
       // stream for the data-table to consume.
@@ -57,7 +52,7 @@ export class DataTableDataSource extends DataSource<Todo> {
    * Paginate the data (client-side). If you're using server-side pagination,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getPagedData(data: Todo[]): Todo[] {
+  private getPagedData(data: ITodo[]): ITodo[] {
     if (this.paginator) {
       const startIndex = this.paginator.pageIndex * this.paginator.pageSize;
       return data.splice(startIndex, this.paginator.pageSize);
@@ -70,7 +65,7 @@ export class DataTableDataSource extends DataSource<Todo> {
    * Sort the data (client-side). If you're using server-side sorting,
    * this would be replaced by requesting the appropriate data from the server.
    */
-  private getSortedData(data: Todo[]): Todo[] {
+  private getSortedData(data: ITodo[]): ITodo[] {
     if (!this.sort || !this.sort.active || this.sort.direction === '') {
       return data;
     }

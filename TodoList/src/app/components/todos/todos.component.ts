@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { Todo } from 'src/app/models/todo.model';
+import { ITodo } from 'src/app/models/todo.model';
 import { TodoApiHelperService } from 'src/app/services/todo.apihelper.service';
 import { TodoService } from 'src/app/services/todo.service';
 
@@ -12,7 +12,7 @@ import { TodoService } from 'src/app/services/todo.service';
 })
 export class TodosComponent implements OnInit {
 
-  todos: Todo[] = [];
+  todos: ITodo[] = [];
 
   todoAddForm: FormGroup;
 
@@ -26,6 +26,7 @@ export class TodosComponent implements OnInit {
 
   onSubmit() {
     this.todoService.AddTodo(this.todoAddForm.get('title').value);
+    //this.todoAddForm.reset();
   }
 
 

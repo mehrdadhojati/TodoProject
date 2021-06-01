@@ -7,6 +7,6 @@ export class ExceptionHandlerService {
     constructor(private toastr: ToastrService) {}
     Log(error:any) {
         console.log(error);
-        this.toastr.error(error)
+        //this.toastr.error(error)
     }
 }

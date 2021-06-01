@@ -2,19 +2,20 @@ import { Injectable, OnInit } from "@angular/core";
 import { ToastrService } from "ngx-toastr";
 import { forkJoin, merge, of, Subject } from "rxjs";
 import { exhaustMap, map, mergeMap, subscribeOn, tap } from "rxjs/operators";
-import { Todo } from "../models/todo.model";
+import { ITodo } from "../models/todo.model";
+import { AppConfig } from "./app-initializer/app.initializer.service";
 import { ExceptionHandlerService } from "./exception.handler.service";
 import { TodoApiHelperService } from "./todo.apihelper.service";
 
 @Injectable({providedIn:'root'})
-export class TodoService implements OnInit {
-    todoItems: Subject<Todo[]> = new Subject<Todo[]>();
-    todos: Todo[] = [];
+export class TodoService {
+    todoItems: Subject<ITodo[]> = new Subject<ITodo[]>();
+    todos: ITodo[] = [];
 
     /** to add item using exhaustMap */
-    private addClicked: Subject<Todo> = new Subject<Todo>();
+    private addClicked: Subject<ITodo> = new Subject<ITodo>();
     /** to Edit item using exhaustMap */
-    private editClicked: Subject<Todo> = new Subject<Todo>();
+    private editClicked: Subject<ITodo> = new Subject<ITodo>();
     /** to Change Todo Status using exhaustMap */
     private StatusClicked: Subject<number> = new Subject<number>();
     /** to Delete Todo using exhaustMap */
@@ -22,17 +23,21 @@ export class TodoService implements OnInit {
 
     constructor(private todoApiHelper: TodoApiHelperService,
                 private ExceptionHandler: ExceptionHandlerService,
-                private toastr: ToastrService) {
+                private toastr: ToastrService,
+                private appConfig: AppConfig) {
 
         this.AddItemExhausted();
         this.EditItemExhausted();
         this.ChangeStatusExhausted();
         this.DeleteExhausted();
-    }
-    ngOnInit() {
-        
-    }
 
+        this.appConfig.todoItems.subscribe((todos: ITodo[]) => {
+            this.todoItems.next(todos);
+            this.todos = todos;
+         });
+    }
+    
+    
     /** Get Max id number in Todo Array */
     GetMaxId(): number {
         return Math.max.apply(Math, this.todos.map(function(o) { return o.id; }))
@@ -40,7 +45,7 @@ export class TodoService implements OnInit {
 
     /** Get All Todo Items from API */
     GetTodos() {
-        this.todoApiHelper.GetTodos().subscribe((items:Todo[])=> {
+        this.todoApiHelper.GetTodos().subscribe((items:ITodo[])=> {
             this.todoItems.next(items);
             this.todos = items;
           }, (error:any) => {
@@ -48,7 +53,7 @@ export class TodoService implements OnInit {
           });
     }
 
-    GetTodoById(id: number): Todo {
+    GetTodoById(id: number): ITodo {
         let todo = this.todos.filter((item) => {
             return item.id == id
         });
@@ -62,7 +67,7 @@ export class TodoService implements OnInit {
             id:this.GetMaxId()+1,
             title: todoTitle,
             userId:1,
-            completed:false} as Todo;
+            completed:false} as ITodo;
         //call exhaustMap to add Item
         this.addClicked.next(todo);
         this.toastr.info("Please Wait...");
@@ -70,8 +75,8 @@ export class TodoService implements OnInit {
 
     /** Add Todo Item To List and Call Api with ExhaustMap */
     private AddItemExhausted() {
-        this.addClicked.pipe(exhaustMap((todo: Todo)=> this.todoApiHelper.AddTodo(todo)))
-        .subscribe((todo:Todo)=> {
+        this.addClicked.pipe(exhaustMap((todo: ITodo)=> this.todoApiHelper.AddTodo(todo)))
+        .subscribe((todo:ITodo)=> {
             this.todos.push(todo);
             this.todoItems.next(this.todos);
             this.toastr.success("Your Todo Added Successfully");
@@ -81,15 +86,15 @@ export class TodoService implements OnInit {
     }
 
     /** Edit Todo Item from API */
-    EditTodo(todo: Todo) {
+    EditTodo(todo: ITodo) {
         this.editClicked.next(todo);
         this.toastr.info("Please Wait...");
     }
 
     /** Edit Todo Item To List and Call Api with ExhaustMap */
     private EditItemExhausted() {
-        this.editClicked.pipe(exhaustMap((todo: Todo)=> this.todoApiHelper.EditTodo(todo)))
-        .subscribe((todo:Todo)=> {
+        this.editClicked.pipe(exhaustMap((todo: ITodo)=> this.todoApiHelper.EditTodo(todo)))
+        .subscribe((todo:ITodo)=> {
             let item = this.GetTodoById(todo.id);
             item.title = todo.title;
             this.toastr.success("Your Todo Edited Successfully");
@@ -107,7 +112,7 @@ export class TodoService implements OnInit {
      private ChangeStatusExhausted() {
         this.StatusClicked.pipe(exhaustMap((id: number)=> 
             this.todoApiHelper.ChangeTodoStatus(id, !this.GetTodoById(id).completed)))
-        .subscribe((todo: Todo)=> {
+        .subscribe((todo: ITodo)=> {
             let item = this.GetTodoById(todo.id);
             item.completed = !item.completed;
             this.toastr.success("Todo Status Changed Successfully");

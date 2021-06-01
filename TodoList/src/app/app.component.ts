@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { Todo } from './models/todo.model';
+import { ITodo } from './models/todo.model';
+import { AppConfig } from './services/app-initializer/app.initializer.service';
 import { ExceptionHandlerService } from './services/exception.handler.service';
 import { TodoApiHelperService } from './services/todo.apihelper.service';
 import { TodoService } from './services/todo.service';
@@ -12,11 +13,16 @@ import { TodoService } from './services/todo.service';
 export class AppComponent implements OnInit {
   title = 'TodoList';
 
-  constructor(private todoService: TodoService) {
+  constructor(private todoService: TodoService,
+              private appConfig: AppConfig) {
+        
+      
   }
 
   ngOnInit() {
-    //get Todos
-    this.todoService.GetTodos();
+    this.appConfig.SetTodos();
+
+    //get Todos (before Use app Initializer)
+    //this.todoService.GetTodos();
   }
 }

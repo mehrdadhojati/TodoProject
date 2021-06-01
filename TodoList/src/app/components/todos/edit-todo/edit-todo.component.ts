@@ -1,9 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
-import { Subject } from 'rxjs';
-import { distinctUntilChanged } from 'rxjs/operators';
-import { Todo } from 'src/app/models/todo.model';
+import { ITodo } from 'src/app/models/todo.model';
 import { TodoService } from 'src/app/services/todo.service';
 
 @Component({
@@ -14,9 +12,9 @@ import { TodoService } from 'src/app/services/todo.service';
 export class EditTodoComponent implements OnInit {
 
   todoEditForm: FormGroup;
-  initialData: Todo;
+  initialData: ITodo;
 
-  constructor(@Inject(MAT_DIALOG_DATA) private data: Todo,
+  constructor(@Inject(MAT_DIALOG_DATA) private data: ITodo,
               private todoService: TodoService) {
     this.initialData = data;
    }
@@ -33,7 +31,7 @@ export class EditTodoComponent implements OnInit {
       title: this.todoEditForm.get('title').value,
       completed: this.initialData.completed,
       userId: this.initialData.userId
-     } as Todo;
+     } as ITodo;
     this.todoService.EditTodo(todo);
   }
 

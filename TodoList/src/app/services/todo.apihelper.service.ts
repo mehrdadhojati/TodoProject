@@ -2,7 +2,7 @@
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
-import { Todo } from "../models/todo.model";
+import { ITodo } from "../models/todo.model";
 import {environment} from '../../environments/environment'
 import { env } from "process";
 
@@ -16,11 +16,11 @@ export class TodoApiHelperService {
         return this.http.get(environment.hostUrl+'/todos?userId=1');
     }
 
-    AddTodo(todo: Todo) : Observable<any> {
+    AddTodo(todo: ITodo) : Observable<any> {
         return this.http.post(environment.hostUrl+'/todos',todo);
     }
 
-    EditTodo(todo: Todo) {
+    EditTodo(todo: ITodo) {
         return this.http.put(environment.hostUrl+'/todos/'+todo.id, todo);
     }
 
