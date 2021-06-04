@@ -1,5 +1,12 @@
+import { TodoApiHelperService as MockTodoApiHelperService } from "src/app/services/todo.apihelper.mock.service";
+import { TodoApiHelperService } from "src/app/services/todo.apihelper.service";
+
+
 export const environment = {
   production: true,
-  hostUrl: 'https://ourapi.iraneit.com',
-  token: 'abcToken@developer'
+  hostUrl: 'https://jsonplaceholder.typicode.com',
+  token: 'abcToken@developer',
+  providers: [
+    {provide: MockTodoApiHelperService , useClass: TodoApiHelperService}
+  ]
 };

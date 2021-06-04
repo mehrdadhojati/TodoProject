@@ -2,27 +2,34 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Subject } from "rxjs";
 import { ITodo } from "src/app/models/todo.model";
-import {environment} from '../../../environments/environment';
+import { TodoApiHelperService } from "../todo.apihelper.mock.service";
 
 @Injectable()
 export class AppConfig {
 
     todoItems: Subject<ITodo[]> = new Subject<ITodo[]>();
     todos: ITodo[] = [];
-    constructor(private http: HttpClient) {
+    constructor(private http: HttpClient,
+                private todoApiHelper: TodoApiHelperService) {
 
     }
 
     initialize() {
-        return this.http.get(environment.hostUrl+'/todos?userId=1')
-        .toPromise()
+        return this.todoApiHelper.GetTodos().toPromise()
         .then( (res: ITodo[])  => {
             this.todos = res;
-            //this.todoItems.next(res);
-            //console.log(res);
         }).catch((error:any)=> {
             console.log(error);
         });
+        // return this.http.get(environment.hostUrl+'/todos?userId=1')
+        // .toPromise()
+        // .then( (res: ITodo[])  => {
+        //     this.todos = res;
+        //     //this.todoItems.next(res);
+        //     //console.log(res);
+        // }).catch((error:any)=> {
+        //     console.log(error);
+        // });
     }
 
     SetTodos() {

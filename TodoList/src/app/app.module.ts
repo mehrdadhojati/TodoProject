@@ -13,6 +13,7 @@ import { ToastrModule } from 'ngx-toastr';
 import { EditTodoComponent } from './components/todos/edit-todo/edit-todo.component';
 import { DeleteTodoComponent } from './components/todos/delete-todo/delete-todo.component';
 import { AppConfig } from './services/app-initializer/app.initializer.service';
+import { environment } from 'src/environments/environment';
 
 const appConfig = (config: AppConfig) => {
   return () => {
@@ -50,7 +51,8 @@ const appConfig = (config: AppConfig) => {
       useFactory: appConfig,
       multi: true,
       deps: [AppConfig]
-    }
+    },
+    ...environment.providers
   ],
   bootstrap: [AppComponent]
 })

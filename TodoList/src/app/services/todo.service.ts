@@ -5,7 +5,7 @@ import { exhaustMap, map, mergeMap, subscribeOn, tap } from "rxjs/operators";
 import { ITodo } from "../models/todo.model";
 import { AppConfig } from "./app-initializer/app.initializer.service";
 import { ExceptionHandlerService } from "./exception.handler.service";
-import { TodoApiHelperService } from "./todo.apihelper.service";
+import { TodoApiHelperService } from "./todo.apihelper.mock.service";
 
 @Injectable({providedIn:'root'})
 export class TodoService {
@@ -33,7 +33,7 @@ export class TodoService {
 
         this.appConfig.todoItems.subscribe((todos: ITodo[]) => {
             this.todoItems.next(todos);
-            this.todos = todos;
+            this.todos = [...todos];
          });
     }
     

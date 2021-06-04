@@ -4,15 +4,15 @@ import { Injectable } from "@angular/core";
 import { Observable, Subject } from "rxjs";
 import { ITodo } from "../models/todo.model";
 import {environment} from '../../environments/environment'
-import { env } from "process";
+import { ITodoApiHelperService } from "./todo.apihelper.interface";
 
 @Injectable({providedIn:'root'})
-export class TodoApiHelperService {
+export class TodoApiHelperService implements ITodoApiHelperService{
     
     constructor(private http: HttpClient) {
     }
 
-    GetTodos() {
+    GetTodos() : Observable<any> {
         return this.http.get(environment.hostUrl+'/todos?userId=1');
     }
 
@@ -20,15 +20,15 @@ export class TodoApiHelperService {
         return this.http.post(environment.hostUrl+'/todos',todo);
     }
 
-    EditTodo(todo: ITodo) {
+    EditTodo(todo: ITodo) : Observable<any> {
         return this.http.put(environment.hostUrl+'/todos/'+todo.id, todo);
     }
 
-    ChangeTodoStatus(id: number, status: boolean) {
+    ChangeTodoStatus(id: number, status: boolean) : Observable<any> {
         return this.http.patch(environment.hostUrl+'/todos/'+id, {completed: status});
     }
 
-    DeleteTodo(id: number) {
+    DeleteTodo(id: number) : Observable<any> {
         return this.http.delete(environment.hostUrl+'/todos/'+id);
     }
 }

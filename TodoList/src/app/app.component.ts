@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ITodo } from './models/todo.model';
 import { AppConfig } from './services/app-initializer/app.initializer.service';
-import { ExceptionHandlerService } from './services/exception.handler.service';
-import { TodoApiHelperService } from './services/todo.apihelper.service';
 import { TodoService } from './services/todo.service';
 
 @Component({
