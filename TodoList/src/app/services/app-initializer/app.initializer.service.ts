@@ -21,15 +21,6 @@ export class AppConfig {
         }).catch((error:any)=> {
             console.log(error);
         });
-        // return this.http.get(environment.hostUrl+'/todos?userId=1')
-        // .toPromise()
-        // .then( (res: ITodo[])  => {
-        //     this.todos = res;
-        //     //this.todoItems.next(res);
-        //     //console.log(res);
-        // }).catch((error:any)=> {
-        //     console.log(error);
-        // });
     }
 
     SetTodos() {

@@ -8,7 +8,6 @@ import { TodoService } from './services/todo.service';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
-  title = 'TodoList';
 
   constructor(private todoService: TodoService,
               private appConfig: AppConfig) {
