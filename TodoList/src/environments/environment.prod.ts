@@ -6,6 +6,7 @@ export const environment = {
   production: true,
   hostUrl: 'https://jsonplaceholder.typicode.com',
   token: 'abcToken@developer',
+  appMode: "API Mode",
   providers: [
     {provide: MockTodoApiHelperService , useClass: TodoApiHelperService}
   ]

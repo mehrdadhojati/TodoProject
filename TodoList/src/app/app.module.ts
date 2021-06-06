@@ -17,6 +17,7 @@ import { EditTodoComponent } from './components/todos/edit-todo/edit-todo.compon
 import { DeleteTodoComponent } from './components/todos/delete-todo/delete-todo.component';
 import { AppConfig } from './services/app-initializer/app.initializer.service';
 import { AuthInterceptor } from './services/interceptors/auth.interceptor.service';
+import { HeaderComponent } from './components/header/header.component';
 
 
 
@@ -34,6 +35,7 @@ const appConfig = (config: AppConfig) => {
     DataTableComponent,
     EditTodoComponent,
     DeleteTodoComponent,
+    HeaderComponent,
   ],
   imports: [
     BrowserModule,
